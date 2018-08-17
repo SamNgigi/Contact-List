@@ -59,14 +59,16 @@ def main():
     print("""  
       Use these short codes:
 
-      cc - create a new contact
+      nc - create a new contact
       dc - display contacts
       fc - find contact
+      rc - remove contact
+      cc - copy contact
       ex - exit the contact list
     """)
     short_code = input().lower()
 
-    if short_code == 'cc':
+    if short_code == 'nc':
       print("New Contact")
       print("*"*10)
 
@@ -125,6 +127,15 @@ def main():
         print(f"Email address - {search_contact.email}")
       else:
         print("This contact does not exists")
+
+    elif short_code == 'rc':
+      if display():
+        print(f'Are you sure you want to delete {display()[0].first_name}? y/N')
+        y_n = input().lower()
+        if y_n == 'y':
+          delete(display()[0])
+      else:
+        print("Nothing to delete")
 
     elif short_code == "ex":
       print("Asta Lavista")
