@@ -3,6 +3,8 @@
 import unittest
 # Importing Contact class
 from contacts import Contact
+# Importing pyperclip
+import pyperclip
 
 class TestContact(unittest.TestCase):
   """
@@ -101,7 +103,40 @@ class TestContact(unittest.TestCase):
     self.assertEqual(found_contact.email, self.added_contact.email)
 
 
+  def test_contact_exists(self):
+    """  
+      Tests if the contact_exists will return a boolean depending on
+      whether or not a contact is found when a number is passed.
+    """
+    self.new_contact.save_contact()
+   
+    self.added_contact = Contact("Ethan", "Hunt", "0786474", "ethan@imf.com")
+    self.added_contact.save_contact()
+    existing_contact = Contact.contact_exists("007007007")
+    """  
+      Here we use the assertTrue method for a change. that should return a boolean
+    """
+    self.assertTrue(existing_contact)
 
+  def test_display_contacts(self):
+    """  
+      Test if our display_contact method will return all our contacts
+    """
+
+    self.assertTrue(Contact.display_contacts() == Contact.contact_list)
+
+  def test_copy_email(self):
+    """  
+      Testing to see if our copying function is able to copy email address from a found contact.
+    """
+
+    self.new_contact.save_contact()
+    Contact.copy_email("007007007")
+
+    """  
+      pyperclip.paste returns whatever is copied on the machine's clipboard at that time.
+    """
+    self.assertEqual(self.new_contact.email, pyperclip.paste())
 
 
 if __name__ == '__main__':
