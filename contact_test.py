@@ -48,8 +48,60 @@ class TestContact(unittest.TestCase):
     # save_contact method which we will define in our Contact class.
     # It should basically add a Contact instance to the Contact list
     self.new_contact.save_contact()
-    # We che
+    # We check if your contact_list length is now 1
     self.assertEqual(len(Contact.contact_list), 1);
+
+  
+  # Function that clears our array following each test.
+  def tearDown(self):
+    Contact.contact_list = []
+
+  # Test saving multiple contact.
+  def test_save_multiple_contacts(self):
+    # Saving our setUp contact
+    self.new_contact.save_contact()
+    # Adding another contact
+    self.added_contact = Contact("Ethan", "Hunt", "0786474", "ethan@imf.com")
+    # Saving our new contact
+    self.added_contact.save_contact()
+    # Checking to see if the length of our array has increased.
+    self.assertEqual(len(Contact.contact_list), 2)
+
+  # Test deleting of a saved contact.
+  def test_delete_contact(self):
+    #Saving our setUp contact
+    self.new_contact.save_contact()
+    # Adding another contact
+    self.added_contact = Contact("Ethan", "Hunt", "0786474", "ethan@imf.com")
+    # Saving our new contact
+    self.added_contact.save_contact()
+    # Calling our delete_contact function
+    self.new_contact.delete_contact()
+    # Checking to see if the length of our array has reduced
+    self.assertEqual(len(Contact.contact_list), 1)
+
+
+  def test_find_contact_by_number(self):
+    """ 
+      Test find_contact by number method that is meant to return a
+      contact when given a number.
+    """
+    
+    self.new_contact.save_contact()
+   
+    self.added_contact = Contact("Ethan", "Hunt", "0786474", "ethan@imf.com")
+    
+    self.added_contact.save_contact()
+
+    found_contact = Contact.find_by_number("0786474")
+    """  
+      Since we know that add_contact number is 0786474 with email
+      ethan@imf.com, found contact method should return the same email.
+    """
+    self.assertEqual(found_contact.email, self.added_contact.email)
+
+
+
 
 
 if __name__ == '__main__':
