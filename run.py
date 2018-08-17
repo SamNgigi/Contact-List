@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # Importing our Contact class
 from contacts import Contact
+import pyperclip
 
 def create(first_name, last_name, phone_number, email_address):
   """  
@@ -42,11 +43,11 @@ def display():
   """
   return Contact.display_contacts()
 
-def copy():
+def copy(number):
   """  
     Returns copied contact email address based on matching number.
   """
-  return Contact.copy_email()
+  return Contact.copy_email(number)
 
 # Defining our main application
 def main():
@@ -136,6 +137,15 @@ def main():
           delete(display()[0])
       else:
         print("Nothing to delete")
+    
+    elif short_code == 'cc':
+      print("What is the contact number for the email you want to copy")
+      number = input()
+      if exists(number):
+        copy(number)
+        print(f"{pyperclip.paste()} found")
+      else:
+        print("Number does not exist")
 
     elif short_code == "ex":
       print("Asta Lavista")
